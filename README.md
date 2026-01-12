@@ -47,7 +47,7 @@ Standard charge controllers with ~100mV hysteresis make this worse. This board i
 
 ## Schematic
 
-![Schematic](SchematicRevK.pdf)
+[Schematic](SchematicRevK.pdf)
 
 ## Supported Configurations
 
