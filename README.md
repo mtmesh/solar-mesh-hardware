@@ -175,7 +175,7 @@ power:
 
 - [Meshtastic Firmware Issue #4378](https://github.com/meshtastic/firmware/issues/4378) — nRF52 deep sleep failure
 - [Voltaic MCSBC-SVR](https://docs.voltaicenclosures.com/mcsbc-svr/) — Reference design for UVLO hysteresis values
-- [uart.cz Rev E](https://pcb.uart.cz/) — Base design
+- [uart.cz Rev E](https://pcb.uart.cz/) — Initial inspiration
 - [BQ24650 Datasheet](https://www.ti.com/product/BQ24650) — MPPT charger
 - [LTC1540 Datasheet](https://www.analog.com/en/products/ltc1540.html) — UVLO comparator
 - [TPS63000 Datasheet](https://www.ti.com/product/TPS63000) — Buck-boost regulator
@@ -188,4 +188,4 @@ power:
 
 - Vlastimil Slinták — uart.cz base design
 - YYCMesh community — Cold weather field testing
-- Meshtastic Discord — Feedback and validation
+- Austin Mesh, Mesh Coordinators, Meshtastic and MeshCore Discords — Feedback and validation
