@@ -1,4 +1,4 @@
-# Mesh* Solar MPPT Charger
+# LoRa Mesh* Solar MPPT Charger
 
 An open-source solar MPPT charge controller for unattended Mesh* node deployments. Integrates solar charging, battery protection, power monitoring, and environmental sensing with the RAK4630 LoRa module and fits in the RAK Unify solar enclosue with space for a battery sled.
 
@@ -71,7 +71,9 @@ Two identical panels can be wired in parallel for increased current. Fuses are r
 | JP5 + JP3 | 2S LTO | 5.40V | Internal (TPS63000) |
 | JP4 + JP3 | 1S LiFePO4 | ~3.6V | Internal (TPS63000) |
 
-**Recommended:** 3× 18650 cells in parallel (1S/3P). ~10000mAh capacity, 7-9 days runtime at typical Meshtastic loads.
+**Recommended:** 3× 18650 cells in parallel (1S/3P). ~10000mAh capacity, 7-9 days runtime at typical Meshtastic loads.  BOM includes an example pack with the correct PH connector, which fits into the sled below.
+
+[STL file for 3x18650 cell pack](Unify 3x18650 Battery Sled.stl)
 
 ## I2C Addresses
 
