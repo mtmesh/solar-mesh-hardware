@@ -8,7 +8,9 @@ An open-source solar MPPT charge controller for unattended Mesh* node deployment
 
 ## Why This Exists
 
-nRF52-based Meshtastic boards (like the RAK4630) have a firmware issue ([#4378](https://github.com/meshtastic/firmware/issues/4378)) where they cannot reliably enter deep sleep at low battery voltages. This causes a destructive cycle:
+**The enclosure:** RAK Wireless makes the [Solar Unify Enclosure](https://store.rakwireless.com/products/unify-enclosure-ip67-150x100x45mm-with-pre-mounted-solar-panel) (IP67, 150×100×45mm) with a built-in 5V solar panel. This board fits in the top section, with space for a 3× 18650 battery sled in the lower section. Add a 3dBi N-Male antenna on top and a vent at the bottom, and you have a complete weatherproof solar node with ~10,000mAh capacity.
+
+**The problem:** nRF52-based Meshtastic boards (like the RAK4630) have a firmware issue ([#4378](https://github.com/meshtastic/firmware/issues/4378)) where they cannot reliably enter deep sleep at low battery voltages. This causes a destructive cycle:
 
 1. Battery drops to ~3.0V → board attempts sleep
 2. Board freezes or browns out
