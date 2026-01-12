@@ -167,7 +167,7 @@ power:
 - All components sourced from DigiKey
 - Hand assembly via hot plate reflow (no PCBA service required)
 - 0603 or larger passives throughout (no 0201)
-- See full BOM in [specification document](docs/specification.md)
+- See full BOM in [DigiKey list](https://www.digikey.com/en/mylists/list/6RO23TL9P5)
 
 ## References
 
