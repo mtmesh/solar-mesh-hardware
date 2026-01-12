@@ -180,7 +180,7 @@ power:
 
 ## License
 
-[TODO]
+[GNU GPL v3 license](LICENSE)
 
 ## Acknowledgments
 
