@@ -135,7 +135,6 @@ Li-Ion cells ship at 30-50% charge (~3.6-3.8V). With a 4.0V release threshold, t
 |--------|----------|---------|
 | JP1 | BME280 address | 0x77 |
 | JP3 | UVLO bypass (for LTO/LiFePO4) | Open |
-| JP12, JP13 | LED disable | Open (LEDs enabled) |
 
 ## Connectors
 
