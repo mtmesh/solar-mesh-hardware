@@ -166,6 +166,27 @@ power:
   device_battery_ina_address: 66  # 0x42
 ```
 
+## Optional Components
+
+Not every node needs every feature. The board is designed as a common platform for mesh deployments—populate what you need, skip what you don't.
+
+| Component | Function | Skip if... |
+|-----------|----------|------------|
+| U1 (BME280) + R1, R2, R3 | Temperature, humidity, pressure | Node doesn't need environmental data |
+| U3 (INA3221) + R_shunt1, R_shunt2 | Solar/battery current monitoring | You only need basic voltage sensing (AIN0 still works), but you need to solder wire bridges |
+| J4, J5 (Qwiic) | I2C expansion ports | No external sensors planned |
+| J6, J7 (screw terminals) | Solar/battery screw connections | Soldering wires directly to pads |
+| J2, J3 (JST-PH) | Battery connectors | Using screw terminals or soldering |
+| J1 (ZH1.5) | Solar connector | Using screw terminals or soldering |
+| J8, J9 (debug headers) | UART/SWD access | Not doing firmware development |
+| D2, D3, Q1, Q3, R12, R14 | GPIO indicator LEDs | Don't need visual status beyond charge LEDs |
+
+**Minimum viable build:** Core charging (BQ24650, LTC1540, TPS63000, protection FETs), charge status LEDs (D5, D6), and the RAK4630. Solder battery and panel wires directly. This gets you a working solar-charged Meshtastic node without the monitoring and expansion features.
+
+**Typical build:** Add INA3221 for power telemetry. This is the most useful optional feature for remote deployments—knowing your solar harvest and battery state without visiting the site.
+
+**Full build:** Everything populated. Useful for environmental monitoring nodes or when you want maximum flexibility for future sensor additions.
+
 ## BOM Notes
 
 - All components sourced from DigiKey
