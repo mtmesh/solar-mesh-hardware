@@ -73,6 +73,11 @@ Two identical panels can be wired in parallel for increased current. Fuses are r
 | JP5 + JP3 | 2S LTO | 5.40V | Internal (TPS63000) |
 | JP4 + JP3 | 1S LiFePO4 | ~3.6V | Internal (TPS63000) |
 
+### UVLO modes
+
+External (LTC1540): Dedicated comparator with 900mV hysteresis (3.1V cutoff, 4.0V release). Used for Li-Ion to prevent the brownout loop described above.
+Internal (TPS63000): The buck-boost regulator's built-in UVLO with 200mV hysteresis (1.5V cutoff, 1.7V release). Bridging JP3 bypasses the LTC1540 circuit. Required for LTO and LiFePO4 because their voltage ranges are incompatible with the 4.0V release threshold.
+
 **Recommended:** 3× 18650 cells in parallel (1S/3P). ~10000mAh capacity, 7-9 days runtime at typical Mesh* loads.  BOM includes an example [Adafruit Lithium Ion Battery - 3.7V 10050mAh](https://www.adafruit.com/product/5035) with the correct PH connector, which fits into the sled below and has worked very well in trials.
 
 [STL file for 3x18650 cell pack](Unify_3x18650_Battery_Sled.stl)
@@ -189,9 +194,9 @@ Not every node needs every feature. The board is designed as a common platform f
 
 ## BOM Notes
 
-- All components sourced from DigiKey
-- Hand assembly via hot plate reflow (no PCBA service required)
-- 0603 or larger passives throughout (no 0201)
+- All components available from DigiKey
+- Hand assembly via hot plate or oven reflow (no PCBA service required)
+- 0603 or larger passives throughout (no 0201) for hand placement
 - See full BOM in [DigiKey list](https://www.digikey.com/en/mylists/list/6RO23TL9P5)
 
 ## References
