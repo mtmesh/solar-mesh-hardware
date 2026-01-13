@@ -8,6 +8,8 @@ An open-source solar MPPT charge controller for unattended Mesh* node deployment
 
 ## Why This Exists
 
+**The inspration:** MSPMesh posted a cool idea for a [RAK Unify 150 node build](https://mspmesh.org/rak-unify-150-node-build/), and from there it was about building a tight package to deliver a similar outcome with a little more control of the components and features.
+
 **The enclosure:** RAK Wireless makes the [Solar Unify Enclosure](https://store.rakwireless.com/products/unify-enclosure-ip67-150x100x45mm-with-pre-mounted-solar-panel) (IP67, 150×100×45mm) with a built-in 5V solar panel. This board fits in the top section, with space for a 3× 18650 battery sled in the lower section. Add a 3dBi N-Male antenna on top and a vent at the bottom, and you have a complete weatherproof solar node with ~10,000mAh capacity.
 
 **The problem:** nRF52-based Mesh* boards (like the RAK4630) have a firmware issue ([#4378](https://github.com/Mesh*/firmware/issues/4378)) where they cannot reliably enter deep sleep at low battery voltages. This causes a destructive cycle:
@@ -217,6 +219,7 @@ Not every node needs every feature. The board is designed as a common platform f
 
 ## Acknowledgments
 
+- MSPMesh [RAK Unify 150 node build](https://mspmesh.org/rak-unify-150-node-build/)
 - Vlastimil Slinták — uart.cz base design
 - YYCMesh community — Cold weather field testing
 - Austin Mesh, Mesh Coordinators, Mesh* and MeshCore Discords — Feedback and validation
