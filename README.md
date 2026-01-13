@@ -1,6 +1,6 @@
 # LoRa Mesh* Solar MPPT Charger
 
-An open-source solar MPPT charge controller for unattended Mesh* node deployments. Integrates solar charging, battery protection, power monitoring, and environmental sensing with the RAK4630 LoRa module and fits in the RAK Unify solar enclosue with space for a battery sled.
+An open-source solar MPPT charge controller for unattended Mesh* node deployments. Integrates solar charging, battery protection, power monitoring, and environmental sensing with the RAK4630 LoRa module and fits in the RAK Unify solar enclosue with space for a battery sled, notch for N-type bulkhead and vent.
 
 ![Full Package Render](badc5f8c-f985-4a23-8027-aa8029b5097e.PNG)
 
@@ -10,7 +10,7 @@ An open-source solar MPPT charge controller for unattended Mesh* node deployment
 
 **The enclosure:** RAK Wireless makes the [Solar Unify Enclosure](https://store.rakwireless.com/products/unify-enclosure-ip67-150x100x45mm-with-pre-mounted-solar-panel) (IP67, 150×100×45mm) with a built-in 5V solar panel. This board fits in the top section, with space for a 3× 18650 battery sled in the lower section. Add a 3dBi N-Male antenna on top and a vent at the bottom, and you have a complete weatherproof solar node with ~10,000mAh capacity.
 
-**The problem:** nRF52-based Meshtastic boards (like the RAK4630) have a firmware issue ([#4378](https://github.com/meshtastic/firmware/issues/4378)) where they cannot reliably enter deep sleep at low battery voltages. This causes a destructive cycle:
+**The problem:** nRF52-based Mesh* boards (like the RAK4630) have a firmware issue ([#4378](https://github.com/Mesh*/firmware/issues/4378)) where they cannot reliably enter deep sleep at low battery voltages. This causes a destructive cycle:
 
 1. Battery drops to ~3.0V → board attempts sleep
 2. Board freezes or browns out
@@ -73,7 +73,7 @@ Two identical panels can be wired in parallel for increased current. Fuses are r
 | JP5 + JP3 | 2S LTO | 5.40V | Internal (TPS63000) |
 | JP4 + JP3 | 1S LiFePO4 | ~3.6V | Internal (TPS63000) |
 
-**Recommended:** 3× 18650 cells in parallel (1S/3P). ~10000mAh capacity, 7-9 days runtime at typical Meshtastic loads.  BOM includes an example [Adafruit Lithium Ion Battery - 3.7V 10050mAh](https://www.adafruit.com/product/5035) with the correct PH connector, which fits into the sled below and has worked very well in trials.
+**Recommended:** 3× 18650 cells in parallel (1S/3P). ~10000mAh capacity, 7-9 days runtime at typical Mesh* loads.  BOM includes an example [Adafruit Lithium Ion Battery - 3.7V 10050mAh](https://www.adafruit.com/product/5035) with the correct PH connector, which fits into the sled below and has worked very well in trials.
 
 [STL file for 3x18650 cell pack](Unify_3x18650_Battery_Sled.stl)
 
@@ -85,7 +85,7 @@ Two identical panels can be wired in parallel for increased current. Fuses are r
 | I2C2 | 0x77 | BME280 (onboard, default) |
 | I2C2 | 0x76 | BME280 (external via Qwiic) |
 
-The INA3221 address 0x42 is required for Meshtastic firmware compatibility.
+The INA3221 address 0x42 is required for Mesh* firmware compatibility.
 
 ## Quick Start
 
@@ -153,7 +153,7 @@ Li-Ion cells ship at 30-50% charge (~3.6-3.8V). With a 4.0V release threshold, t
 | J8 | 1×04 header | UART debug (DNP) |
 | J9 | 1×04 header | SWD programming (DNP) |
 
-## Meshtastic Configuration
+## Mesh* Configuration
 
 ```yaml
 telemetry:
@@ -175,7 +175,7 @@ power:
 
 ## References
 
-- [Meshtastic Firmware Issue #4378](https://github.com/meshtastic/firmware/issues/4378) — nRF52 deep sleep failure
+- [Mesh* Firmware Issue #4378](https://github.com/Mesh*/firmware/issues/4378) — nRF52 deep sleep failure
 - [Voltaic MCSBC-SVR](https://docs.voltaicenclosures.com/mcsbc-svr/) — Reference design for UVLO hysteresis values
 - [uart.cz Rev E](https://pcb.uart.cz/) — Initial inspiration
 - [BQ24650 Datasheet](https://www.ti.com/product/BQ24650) — MPPT charger
@@ -190,4 +190,4 @@ power:
 
 - Vlastimil Slinták — uart.cz base design
 - YYCMesh community — Cold weather field testing
-- Austin Mesh, Mesh Coordinators, Meshtastic and MeshCore Discords — Feedback and validation
+- Austin Mesh, Mesh Coordinators, Mesh* and MeshCore Discords — Feedback and validation
