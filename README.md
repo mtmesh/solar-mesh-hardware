@@ -80,7 +80,10 @@ Internal (TPS63000): The buck-boost regulator's built-in UVLO with 200mV hystere
 
 **Recommended:** 3× 18650 cells in parallel (1S/3P). ~10000mAh capacity, 7-9 days runtime at typical Mesh* loads.  BOM includes an example [Adafruit Lithium Ion Battery - 3.7V 10050mAh](https://www.adafruit.com/product/5035) with the correct PH connector, which fits into the sled below and has worked very well in trials.
 
-[STL file for 3x18650 cell pack](Unify_3x18650_Battery_Sled.stl)
+### 3D Printed Battery Sleds
+
+- [STL file for 3x18650 cell pack](Unify_3x18650_Battery_Sled.stl)
+
 
 ## I2C Addresses
 
