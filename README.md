@@ -1,6 +1,6 @@
 # LoRa Mesh* Solar MPPT Charger
 
-An open-source solar MPPT charge controller for unattended Mesh* node deployments. Integrates solar charging, battery protection, power monitoring, and environmental sensing with the RAK4630 LoRa module and fits in the RAK Unify solar enclosue with space for a battery sled, notch for N-type bulkhead and vent.
+An open-source solar MPPT charge controller for unattended Mesh* node deployments. Integrates solar charging, battery protection, power monitoring, and environmental sensing with the RAK4630 LoRa module and fits in the RAK Unify solar enclosure with space for a battery sled, notch for N-type bulkhead and vent.
 
 ![Full Package Render](badc5f8c-f985-4a23-8027-aa8029b5097e.PNG)
 
@@ -8,7 +8,7 @@ An open-source solar MPPT charge controller for unattended Mesh* node deployment
 
 ## Why This Exists
 
-**The inspration:** MSPMesh posted a cool idea for a [RAK Unify 150 node build](https://mspmesh.org/rak-unify-150-node-build/), and from there it was about building a tight package to deliver a similar outcome with a little more control of the components and features.
+**The inspiration:** MSPMesh posted a cool idea for a [RAK Unify 150 node build](https://mspmesh.org/rak-unify-150-node-build/), and from there it was about building a tight package to deliver a similar outcome with a little more control of the components and features.
 
 **The enclosure:** RAK Wireless makes the [Solar Unify Enclosure](https://store.rakwireless.com/products/unify-enclosure-ip67-150x100x45mm-with-pre-mounted-solar-panel) (IP67, 150×100×45mm) with a built-in 5V solar panel. This board fits in the top section, with space for a 3× 18650 battery sled in the lower section. Add a 3dBi N-Male antenna on top and a vent at the bottom, and you have a complete weatherproof solar node with ~10,000mAh capacity.
 
@@ -108,7 +108,7 @@ The INA3221 address 0x42 is required for Mesh* firmware compatibility.
 
 ### Default Configuration
 
-The board is fabricated with JP11 anmd JP6 bridged for:
+The board is fabricated with JP11 and JP6 bridged for:
 - 5V panel (JP11 bridged)
 - Li-Ion chemistry (JP6 bridged)
 - BME280 at 0x77 (JP1 position A)
@@ -227,6 +227,6 @@ Not every node needs every feature. The board is designed as a common platform f
 ## Acknowledgments
 
 - MSPMesh [RAK Unify 150 node build](https://mspmesh.org/rak-unify-150-node-build/)
-- Vlastimil Slinták — uart.cz base design
+- Vlastimil Slinták — uart.cz [single board concept](https://uart.cz/2534/solar-mppt-charger-for-meshtastic/)
 - YYCMesh community — Cold weather field testing
 - Austin Mesh, Mesh Coordinators, Mesh* and MeshCore Discords — Feedback and validation
