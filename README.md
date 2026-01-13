@@ -77,8 +77,15 @@ Two identical panels can be wired in parallel for increased current. Fuses are r
 
 ### UVLO modes
 
-External (LTC1540): Dedicated comparator with 900mV hysteresis (3.1V cutoff, 4.0V release). Used for Li-Ion to prevent the brownout loop described above.
-Internal (TPS63000): The buck-boost regulator's built-in UVLO with 200mV hysteresis (1.5V cutoff, 1.7V release). Bridging JP3 bypasses the LTC1540 circuit. Required for LTO and LiFePO4 because their voltage ranges are incompatible with the 4.0V release threshold.
+**UVLO modes:**
+
+- External (LTC1540): Dedicated comparator with 900mV hysteresis (3.1V cutoff, 4.0V release). Used for Li-Ion to prevent the brownout loop described above.
+- Internal (TPS63000): The buck-boost regulator's built-in UVLO with 200mV hysteresis (1.5V cutoff, 1.7V release). Bridging JP3 bypasses the LTC1540 circuit.
+
+**Why JP3 bypass for alternate chemistries:**
+
+- LTO: Can safely discharge to 1.5V/cell (3.0V for 2S) with minimal voltage sag. The external UVLO's 3.1V cutoff would waste capacity. The TPS63000's 1.5V cutoff is a better match.
+- LiFePO4: Max charge voltage is ~3.65V—below the 4.0V release threshold. The system would never turn back on after UVLO trips.
 
 **Recommended:** 3× 18650 cells in parallel (1S/3P). ~10000mAh capacity, 7-9 days runtime at typical Mesh* loads.  BOM includes an example [Adafruit Lithium Ion Battery - 3.7V 10050mAh](https://www.adafruit.com/product/5035) with the correct PH connector, which fits into the sled below and has worked very well in trials.
 
