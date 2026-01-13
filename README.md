@@ -101,16 +101,16 @@ The INA3221 address 0x42 is required for Mesh* firmware compatibility.
 
 ### Default Configuration
 
-The board is configured out of the box for:
+The board is fabricated with JP11 anmd JP6 bridged for:
 - 5V panel (JP11 bridged)
 - Li-Ion chemistry (JP6 bridged)
 - BME280 at 0x77 (JP1 position A)
 
-No changes needed for standard HX-140X90 panel + 18650 battery setups.
+No changes needed for standard HX-140X90 panel + 18650 battery setups.  Other choices need you to break the fabricated links and solder the JP* of choice.
 
 ### First Power-Up
 
-Li-Ion cells ship at 30-50% charge (~3.6-3.8V). With a 4.0V release threshold, the board won't start on a new battery alone.
+Li-Ion cells usually ship at 30-50% charge (~3.6-3.8V). With a 4.0V release threshold, the board won't start on a new battery alone.
 
 **USB Bootstrap:**
 1. Connect USB-C — system powers up via D7 Schottky diode
@@ -129,7 +129,7 @@ Li-Ion cells ship at 30-50% charge (~3.6-3.8V). With a 4.0V release threshold, t
 
 | Jumper | Vmpp |
 |--------|------|
-| JP11 | 5V (default) |
+| JP11 | 5V (default fabrication bridge) |
 | JP10 | 12V |
 | JP9 | 18V |
 | JP8 | 20V |
@@ -139,7 +139,7 @@ Li-Ion cells ship at 30-50% charge (~3.6-3.8V). With a 4.0V release threshold, t
 
 | Jumper | Chemistry |
 |--------|-----------|
-| JP6 | Li-Ion (default) |
+| JP6 | Li-Ion (default fabrication bridge) |
 | JP5 | 2S LTO |
 | JP4 | Custom |
 
@@ -147,21 +147,21 @@ Li-Ion cells ship at 30-50% charge (~3.6-3.8V). With a 4.0V release threshold, t
 
 | Jumper | Function | Default |
 |--------|----------|---------|
-| JP1 | BME280 address | 0x77 |
+| JP1 | BME280 address | 0x77 (default fabrication bridge) |
 | JP3 | UVLO bypass (for LTO/LiFePO4) | Open |
 
 ## Connectors
 
 | Ref | Type | Function |
 |-----|------|----------|
-| J1 | ZH1.5-2P | Solar input (matches HX-140X90) |
+| J1 | ZH1.5-2P | Solar input (matches HX-140X90 in the Unify 150 case) |
 | J6 | Screw terminal | Solar input (alt) |
 | J2, J3 | JST-PH | Battery |
 | J7 | Screw terminal | Battery (alt) |
 | J4, J5 | Qwiic | I2C2 expansion |
 | J10 | USB-C | Power + data, no charging |
-| J8 | 1×04 header | UART debug (DNP) |
-| J9 | 1×04 header | SWD programming (DNP) |
+| J8 | 1×04 header | UART debug (4x2.54mm pitch header position) |
+| J9 | 1×04 header | SWD programming (4x2.54mm pitch header position) |
 
 ## Mesh* Configuration
 
