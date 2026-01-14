@@ -1,6 +1,6 @@
-# LoRa Mesh* Solar MPPT Charger
+# LoRa Mesh Solar MPPT Charger
 
-An open-source solar MPPT charge controller for unattended Mesh* node deployments. Integrates solar charging, battery protection, power monitoring, and environmental sensing with the RAK4630 LoRa module and fits in the RAK Unify solar enclosure with space for a battery sled, notch for N-type bulkhead and vent.
+An open-source solar MPPT charge controller for unattended Meshtastic nodes. Integrates solar charging, battery protection, power monitoring, and environmental sensing with the RAK4630 LoRa module. Fits the RAK Unify Solar Enclosure with space for a 3×18650 battery sled, N-type antenna bulkhead, and pressure vent.
 
 ![Full Package Render](badc5f8c-f985-4a23-8027-aa8029b5097e.PNG)
 
@@ -8,24 +8,24 @@ An open-source solar MPPT charge controller for unattended Mesh* node deployment
 
 ## Why This Exists
 
-**The inspiration:** MSPMesh posted a cool idea for a [RAK Unify 150 node build](https://mspmesh.org/rak-unify-150-node-build/), and from there it was about building a tight package to deliver a similar outcome with a little more control of the components and features.
+**Inspiration:** MSPMesh's [RAK Unify 150 node build](https://mspmesh.org/rak-unify-150-node-build/) showed what's possible with the RAK Solar Unify Enclosure. This project delivers a similar outcome with tighter integration and more control over components.
 
-**The enclosure:** RAK Wireless makes the [Solar Unify Enclosure](https://store.rakwireless.com/products/unify-enclosure-ip67-150x100x45mm-with-pre-mounted-solar-panel) (IP67, 150×100×45mm) with a built-in 5V solar panel. This board fits in the top section, with space for a 3× 18650 battery sled in the lower section. Add a 3dBi N-Male antenna on top and a vent at the bottom, and you have a complete weatherproof solar node with ~10,000mAh capacity.
+**Target platform:** The RAK [Solar Unify Enclosure](https://store.rakwireless.com/products/unify-enclosure-ip67-150x100x45mm-with-pre-mounted-solar-panel) (IP67, 150×100×45mm) with built-in 5V panel. This board fits the upper section; a 3×18650 battery sled fits below. Add a 3dBi antenna and optional vent for a complete weatherproof solar node with ~10,000mAh capacity.
 
-**The problem:** nRF52-based Mesh* boards (like the RAK4630) have a firmware issue ([#4378](https://github.com/Mesh*/firmware/issues/4378)) where they cannot reliably enter deep sleep at low battery voltages. This causes a destructive cycle:
+**The problem:** nRF52-based Meshtastic boards can't reliably enter deep sleep below ~3.3V (firmware issue [#4378](https://github.com/meshtastic/firmware/issues/4378)). This causes a destructive cycle:
 
 1. Battery drops to ~3.0V → board attempts sleep
 2. Board freezes or browns out
 3. Watchdog resets → LoRa TX spike → voltage sag → brownout
-4. Repeat until battery is damaged
+4. Repeat until battery damage
 
-Standard charge controllers with ~100mV hysteresis make this worse. This board implements 900mV hysteresis (3.1V cutoff, 4.0V release) so the battery has enough stored energy for reliable cold starts.
+Standard charge controllers with ~100mV hysteresis make this worse. This board uses 900mV hysteresis (3.1V cutoff, 4.0V release) so the battery has enough stored energy for reliable cold starts.
 
 ## Features
 
 ![Board Render](Render.png)
 
-- BQ24650 synchronous buck MPPT charger (90-95% efficiency)
+- BQ24650 synchronous buck MPPT charger (90–95% efficiency)
 - 5V to 20V panel support via jumper selection
 - LTC1540 ultra-low-power UVLO comparator (~1.4µA quiescent when tripped)
 - INA3221 3-channel power monitor (solar + battery)
@@ -34,13 +34,13 @@ Standard charge controllers with ~100mV hysteresis make this worse. This board i
 - USB-C for power and firmware updates
 - Dual I2C buses (power monitoring separate from sensors)
 - Two Qwiic/STEMMA QT expansion ports
-- Fits RAK Solar Enclosure IP67 (85×45mm)
+- Fits RAK Solar Enclosure IP67 (85×45mm PCB)
 
 ## Specifications
 
 | Parameter | Value |
 |-----------|-------|
-| Input Voltage (Solar) | 5V – 20V Vmpp |
+| Input Voltage (Solar) | 5V–20V Vmpp |
 | Max Charge Current | 2A |
 | Output Voltage | 3.3V regulated |
 | UVLO Cutoff (Li-Ion) | 3.12V ±50mV |
@@ -51,7 +51,53 @@ Standard charge controllers with ~100mV hysteresis make this worse. This board i
 
 ## Schematic
 
-[Schematic](SchematicRevK.pdf)
+[Schematic PDF](SchematicRevK.pdf)
+
+---
+
+## Enclosure Assembly
+
+### LoRa Antenna
+
+**WARNING:** The RAK4630 has no built-in LoRa antenna. Connect the antenna before applying power or you'll damage the radio.
+
+The Unify enclosure has a pre-drilled hole for an N-type bulkhead. The RAK4630 uses an MHF1 (U.FL compatible) RF connector.
+
+**Recommended:** [RAK 3dBi Fiberglass Outdoor Antenna](https://store.rakwireless.com/products/3dbi-fiber-glass-antenna) (SKU 915008). Includes antenna, N-Male to MHF1 pigtail, and bulkhead—everything you need.
+
+**Pigtail length:** Keep it short (50–100mm) to minimize signal loss. The RAK kit pigtail works well for the Unify enclosure.
+
+**Mounting:**
+
+| Method | Notes |
+|--------|-------|
+| Direct mount | Antenna threads onto N-type bulkhead. Simple and compact. |
+| External pigtail | Antenna mounts separately. Better for larger antennas or awkward enclosure placement. |
+
+**Wind load:** For direct-mounted antennas, a 5/8" ID fender washer between antenna base and enclosure spreads the load and reduces stress on the plastic. Worth doing for taller antennas or exposed locations.
+
+**Antenna selection:** See [meshtastic/antenna-reports](https://github.com/meshtastic/antenna-reports) for community test data.
+
+### Pressure Vent
+
+A vent prevents condensation from temperature swings and altitude changes. The enclosure has a pre-drilled location in the bottom panel.
+
+**Placement:** Mount centrally in the bottom. The battery sled has an aperture for the vent's retaining nut.
+
+**Sourcing:** IP67 vents available from RAK or cheaper from AliExpress. Some skip the vent entirely—depends on your climate.
+
+### Bluetooth Antenna
+
+**WARNING:** The RAK4630 has no built-in BLE antenna. Connect one before applying power or you'll damage the radio.
+
+| Type | Notes |
+|------|-------|
+| Internal PCB antenna | Self-adhesive, mounts inside enclosure wall. Simple, works for most cases. |
+| External 2.4GHz antenna | Needs another bulkhead. Better range if you need BLE access from a distance. |
+
+**Recommended:** [RAK 2.4GHz WiFi/BLE PCB Antenna](https://store.rakwireless.com/products/ble-pcb-antenna-5-5dbi) (SKU 920091, 5.5dBi). Sticks to the inside of the enclosure wall.
+
+---
 
 ## Supported Configurations
 
@@ -65,34 +111,72 @@ Standard charge controllers with ~100mV hysteresis make this worse. This board i
 | JP8 | 20V | |
 | JP7 | Custom | User-defined resistor |
 
-Two identical panels can be wired in parallel for increased current. Fuses are rated for 750mA hold to support dual 5V panels (~760mA combined).
+Two identical panels can be wired in parallel for more current. Fuses are rated for 750mA hold to support dual 5V panels (~760mA combined).
 
 ### Battery Chemistry
 
 | Jumper | Chemistry | Charge Voltage | UVLO |
 |--------|-----------|----------------|------|
-| JP6 (default) | 1S/2P Li-Ion | 4.20V | External (LTC1540) |
+| JP6 (default) | 1S Li-Ion | 4.20V | External (LTC1540) |
 | JP5 + JP3 | 2S LTO | 5.40V | Internal (TPS63000) |
 | JP4 + JP3 | 1S LiFePO4 | ~3.6V | Internal (TPS63000) |
 
-### UVLO modes
+### UVLO Modes
 
-**UVLO modes:**
+- **External (LTC1540):** 900mV hysteresis (3.1V cutoff, 4.0V release). Used for Li-Ion to prevent the brownout loop.
+- **Internal (TPS63000):** 200mV hysteresis (1.5V cutoff, 1.7V release). Bridge JP3 to bypass LTC1540.
 
-- External (LTC1540): Dedicated comparator with 900mV hysteresis (3.1V cutoff, 4.0V release). Used for Li-Ion to prevent the brownout loop described above.
-- Internal (TPS63000): The buck-boost regulator's built-in UVLO with 200mV hysteresis (1.5V cutoff, 1.7V release). Bridging JP3 bypasses the LTC1540 circuit.
+**Why JP3 bypass for other chemistries:**
 
-**Why JP3 bypass for alternate chemistries:**
+- **LTO:** Safe to 1.5V/cell. The 3.1V external cutoff wastes capacity.
+- **LiFePO4:** Max charge (~3.65V) is below the 4.0V release threshold—system would never restart.
 
-- LTO: Can safely discharge to 1.5V/cell (3.0V for 2S) with minimal voltage sag. The external UVLO's 3.1V cutoff would waste capacity. The TPS63000's 1.5V cutoff is a better match.
-- LiFePO4: Max charge voltage is ~3.65V—below the 4.0V release threshold. The system would never turn back on after UVLO trips.
+### Recommended Battery
 
-**Recommended:** 3× 18650 cells in parallel (1S/3P). ~10000mAh capacity, 7-9 days runtime at typical Mesh* loads.  BOM includes an example [Adafruit Lithium Ion Battery - 3.7V 10050mAh](https://www.adafruit.com/product/5035) with the correct PH connector, which fits into the sled below and has worked very well in trials.
+3× 18650 cells in parallel (1S/3P). ~10,000mAh capacity, 7–9 days runtime at typical Meshtastic loads.
 
-### 3D Printed Battery Sleds
+**Tested:** [Adafruit 3.7V 10050mAh](https://www.adafruit.com/product/5035) with JST-PH connector. Fits the sled, works well.
 
-- [STL file for 3x18650 cell pack](Unify_3x18650_Battery_Sled.stl)
+### 3D Printed Battery Sled
 
+A printable sled for 3×18650 cells is included in this repo. Mounts in the lower section of the Unify enclosure, attaching directly to the case's internal mounting lugs—no need for the RAK insert board.
+
+[STL file for 3×18650 cell pack](Unify_3x18650_Battery_Sled.stl)
+
+---
+
+## Quick Start
+
+### Default Configuration
+
+Factory bridges set up the board for:
+
+- 5V panel (JP11 bridged)
+- Li-Ion chemistry (JP6 bridged)
+- BME280 at 0x77 (JP1 position A)
+
+No changes needed for HX-140X90 panel + 18650 batteries. Other setups require breaking factory bridges and soldering the right jumper.
+
+### First Power-Up
+
+**WARNING:** Connect BOTH antennas (LoRa and BLE) before applying power. The RAK4630 has no built-in antennas—powering up without them damages the radios.
+
+Li-Ion cells ship at 30–50% SoC (~3.6–3.8V). With a 4.0V release threshold, the board won't start on a new battery alone.
+
+**USB Bootstrap:**
+
+1. Connect USB-C—system powers via D7 Schottky
+2. Connect solar—BQ24650 charges battery
+3. Wait for battery to hit 4.0V—UVLO releases
+4. Disconnect USB—runs on battery
+
+**Solar-only deployment:**
+
+1. Install battery and connect solar
+2. Battery charges with load disconnected (UVLO keeps it off)
+3. System starts when battery reaches 4.0V
+
+---
 
 ## I2C Addresses
 
@@ -102,33 +186,9 @@ Two identical panels can be wired in parallel for increased current. Fuses are r
 | I2C2 | 0x77 | BME280 (onboard, default) |
 | I2C2 | 0x76 | BME280 (external via Qwiic) |
 
-The INA3221 address 0x42 is required for Mesh* firmware compatibility.
+INA3221 at 0x42 is required for Meshtastic firmware.
 
-## Quick Start
-
-### Default Configuration
-
-The board is fabricated with JP11 and JP6 bridged for:
-- 5V panel (JP11 bridged)
-- Li-Ion chemistry (JP6 bridged)
-- BME280 at 0x77 (JP1 position A)
-
-No changes needed for standard HX-140X90 panel + 18650 battery setups.  Other choices need you to break the fabricated links and solder the JP* of choice.
-
-### First Power-Up
-
-Li-Ion cells usually ship at 30-50% charge (~3.6-3.8V). With a 4.0V release threshold, the board won't start on a new battery alone.
-
-**USB Bootstrap:**
-1. Connect USB-C — system powers up via D7 Schottky diode
-2. Connect solar panel — BQ24650 charges battery
-3. Wait for battery to reach 4.0V — UVLO releases
-4. Disconnect USB — system continues on battery
-
-**Solar-only deployment:**
-1. Install battery and connect solar
-2. Battery charges with system load disconnected (UVLO keeps it off)
-3. System auto-starts when battery reaches 4.0V
+---
 
 ## Jumper Reference
 
@@ -136,7 +196,7 @@ Li-Ion cells usually ship at 30-50% charge (~3.6-3.8V). With a 4.0V release thre
 
 | Jumper | Vmpp |
 |--------|------|
-| JP11 | 5V (default fabrication bridge) |
+| JP11 | 5V (factory bridged) |
 | JP10 | 12V |
 | JP9 | 18V |
 | JP8 | 20V |
@@ -146,7 +206,7 @@ Li-Ion cells usually ship at 30-50% charge (~3.6-3.8V). With a 4.0V release thre
 
 | Jumper | Chemistry |
 |--------|-----------|
-| JP6 | Li-Ion (default fabrication bridge) |
+| JP6 | Li-Ion (factory bridged) |
 | JP5 | 2S LTO |
 | JP4 | Custom |
 
@@ -154,23 +214,27 @@ Li-Ion cells usually ship at 30-50% charge (~3.6-3.8V). With a 4.0V release thre
 
 | Jumper | Function | Default |
 |--------|----------|---------|
-| JP1 | BME280 address | 0x77 (default fabrication bridge) |
+| JP1 | BME280 address | 0x77 (factory bridged) |
 | JP3 | UVLO bypass (for LTO/LiFePO4) | Open |
+
+---
 
 ## Connectors
 
 | Ref | Type | Function |
 |-----|------|----------|
-| J1 | ZH1.5-2P | Solar input (matches HX-140X90 in the Unify 150 case) |
+| J1 | ZH1.5-2P | Solar input (matches HX-140X90 panel) |
 | J6 | Screw terminal | Solar input (alt) |
 | J2, J3 | JST-PH | Battery |
 | J7 | Screw terminal | Battery (alt) |
 | J4, J5 | Qwiic | I2C2 expansion |
-| J10 | USB-C | Power + data, no charging |
-| J8 | 1×04 header | UART debug (4x2.54mm pitch header position) |
-| J9 | 1×04 header | SWD programming (4x2.54mm pitch header position) |
+| J10 | USB-C | Power + data (no battery charging) |
+| J8 | 1×04 header | UART debug |
+| J9 | 1×04 header | SWD programming |
 
-## Mesh* Configuration
+---
+
+## Meshtastic Configuration
 
 ```yaml
 telemetry:
@@ -183,50 +247,65 @@ power:
   device_battery_ina_address: 66  # 0x42
 ```
 
-## Optional Components
+---
 
-Not every node needs every feature. The board is designed as a common platform for Mesh* deployments—populate what you need, skip what you don't.
+## Build Tiers
+
+Populate what you need.
+
+### Minimum Viable
+
+Core charging (BQ24650, LTC1540, TPS63000, protection FETs), charge status LEDs (D5, D6), and RAK4630. Solder battery and panel wires directly. Working solar node, no monitoring.
+
+### Typical Build
+
+Add INA3221 for power telemetry, BME280 for environmental data, ZH connector for enclosure panel, JST-PH for battery. Power telemetry is the most useful addition—know your solar harvest and battery state without visiting the site.
+
+### Full Build
+
+Everything populated. Qwiic ports for expansion, debug headers for development.
+
+### Optional Components
 
 | Component | Function | Skip if... |
 |-----------|----------|------------|
-| U1 (BME280) + R1, R2, R3 | Temperature, humidity, pressure | Node doesn't need environmental data |
-| U3 (INA3221) + R_shunt1, R_shunt2 | Solar/battery current monitoring | You only need basic voltage sensing (AIN0 still works), but you need to solder 0Ω bridges |
-| J4, J5 (Qwiic) | I2C expansion ports | No external sensors planned |
-| J6, J7 (screw terminals) | Solar/battery screw connections | Soldering wires directly to tht pads |
-| J2, J3 (JST-PH) | Battery connectors | Using screw terminals or soldering |
-| J1 (ZH1.5) | Solar connector | Using screw terminals or soldering |
-| J8, J9 (debug headers) | UART/SWD access | Not doing firmware development |
-| D2, D3, Q1, Q3, R12, R14 | GPIO indicator LEDs | Don't need visual status beyond charge LEDs |
+| U1 (BME280) + R1, R2, R3 | Temperature, humidity, pressure | No environmental data needed |
+| U3 (INA3221) + shunts | Solar/battery current monitoring | Only need voltage sensing (install 0Ω bridges) |
+| J4, J5 (Qwiic) | I2C expansion ports | No external sensors |
+| J6, J7 (screw terminals) | Alt solar/battery connections | Using ZH/PH or soldering |
+| J8, J9 (debug headers) | UART/SWD access | No firmware development |
+| D2, D3, Q1, Q3, R12, R14 | GPIO indicator LEDs | Don't need extra status LEDs |
 
-**Minimum viable build:** Core charging (BQ24650, LTC1540, TPS63000, protection FETs), charge status LEDs (D5, D6), and the RAK4630. Solder battery and panel wires directly. This gets you a working solar-charged Meshtastic node without the monitoring and expansion features.
-
-**Typical build:** Add INA3221 for power telemetry, bme280 for enviro, ZH for the enclosure inbuilt solar panel connector, and PH on the battery for common packs.  This is the most useful optional feature for remote deployments—knowing your solar harvest and battery state without visiting the site.
-
-**Full build:** Everything populated. Useful for environmental monitoring nodes or when you want maximum flexibility for future sensor additions.
+---
 
 ## BOM Notes
 
-- All components available from DigiKey
-- Hand assembly via hot plate or oven reflow (no PCBA service required)
-- 0603 or larger passives throughout (no 0201) for hand placement
-- See full BOM in [DigiKey list](https://www.digikey.com/en/mylists/list/6RO23TL9P5)
+- All components from DigiKey
+- Hand assembly via hot plate or reflow oven (no PCBA needed)
+- 0603 or larger passives (no 0201) for hand placement
+- [Full DigiKey BOM](https://www.digikey.com/en/mylists/list/6RO23TL9P5)
+
+---
 
 ## References
 
-- [Mesh* Firmware Issue #4378](https://github.com/Mesh*/firmware/issues/4378) — nRF52 deep sleep failure
-- [Voltaic MCSBC-SVR](https://docs.voltaicenclosures.com/mcsbc-svr/) — Reference design for UVLO hysteresis values
+- [Meshtastic Firmware Issue #4378](https://github.com/meshtastic/firmware/issues/4378) — nRF52 deep sleep failure
+- [Meshtastic Antenna Reports](https://github.com/meshtastic/antenna-reports) — Community antenna testing
+- [Voltaic MCSBC-SVR](https://docs.voltaicenclosures.com/mcsbc-svr/) — UVLO hysteresis reference
 - [uart.cz Rev E](https://pcb.uart.cz/) — Initial inspiration
-- [BQ24650 Datasheet](https://www.ti.com/product/BQ24650) — MPPT charger
-- [LTC1540 Datasheet](https://www.analog.com/en/products/ltc1540.html) — UVLO comparator
-- [TPS63000 Datasheet](https://www.ti.com/product/TPS63000) — Buck-boost regulator
+- [BQ24650 Datasheet](https://www.ti.com/product/BQ24650)
+- [LTC1540 Datasheet](https://www.analog.com/en/products/ltc1540.html)
+- [TPS63000 Datasheet](https://www.ti.com/product/TPS63000)
+
+---
 
 ## License
 
-[GNU GPL v3 license](LICENSE)
+[GNU GPL v3](LICENSE)
 
 ## Acknowledgments
 
-- MSPMesh [RAK Unify 150 node build](https://mspmesh.org/rak-unify-150-node-build/)
+- MSPMesh — [RAK Unify 150 node build](https://mspmesh.org/rak-unify-150-node-build/)
 - Vlastimil Slinták — uart.cz [single board concept](https://uart.cz/2534/solar-mppt-charger-for-meshtastic/)
-- YYCMesh community — Cold weather field testing
-- Austin Mesh, Mesh Coordinators, Mesh* and MeshCore Discords — Feedback and validation
+- YYCMesh — Cold weather field testing
+- Austin Mesh, Mesh Coordinators, Meshtastic & MeshCore Discords — Feedback
