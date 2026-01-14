@@ -61,7 +61,9 @@ Standard charge controllers with ~100mV hysteresis make this worse. This board u
 
 **WARNING:** The RAK4630 has no built-in LoRa antenna. Connect the antenna before applying power or you'll damage the radio.
 
-The Unify enclosure has a pre-drilled hole for an N-type bulkhead. The RAK4630 uses an MHF1 (U.FL compatible) RF connector.
+The standard Unify enclosure needs a hole drilled for the N-type bulkhead. RAK sells a version with RP-SMA and USB bulkheads pre-installed, but it's $19 more and the port locations interfere with the internal layout—not recommended.
+
+**Drilling:** See MSPMesh's [drilling guide](https://mspmesh.org/rak-unify-150-node-build/) for placement. A stepper bit works well for the case thickness. The RAK4630 uses an MHF1 (U.FL compatible) RF connector.
 
 **Recommended:** [RAK 3dBi Fiberglass Outdoor Antenna](https://store.rakwireless.com/products/3dbi-fiber-glass-antenna) (SKU 915008). Includes antenna, N-Male to MHF1 pigtail, and bulkhead—everything you need.
 
@@ -80,9 +82,9 @@ The Unify enclosure has a pre-drilled hole for an N-type bulkhead. The RAK4630 u
 
 ### Pressure Vent
 
-A vent prevents condensation from temperature swings and altitude changes. The enclosure has a pre-drilled location in the bottom panel.
+A vent prevents condensation from temperature swings and altitude changes.
 
-**Placement:** Mount centrally in the bottom. The battery sled has an aperture for the vent's retaining nut.
+**Placement:** Mount centrally in the bottom of the enclosure, facing downward. This orientation reduces water ingress risk. The battery sled has an aperture for the vent's retaining nut.
 
 **Sourcing:** IP67 vents available from RAK or cheaper from AliExpress. Some skip the vent entirely—depends on your climate.
 
