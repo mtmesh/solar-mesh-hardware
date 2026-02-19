@@ -5,6 +5,7 @@ An open-source solar MPPT charge controller for unattended Meshtastic nodes. Int
 ![Full Package Render](badc5f8c-f985-4a23-8027-aa8029b5097e.PNG)
 
 **Current Revision:** K v1.2  
+**WARNING:** Do not fab Rev K board without dead-bugging Q2 & Q4. Rev L incoming.
 
 ## Why This Exists
 
